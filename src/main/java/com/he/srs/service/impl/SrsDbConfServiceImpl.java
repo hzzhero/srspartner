@@ -84,7 +84,7 @@ public class SrsDbConfServiceImpl extends ServiceImpl<ConfigItemMapper, ConfigIt
             File f = new File(srsconfPath);
             file.transferTo(f);
             List<String> strings = FileUtil.readLines(f, StandardCharsets.UTF_8);
-            strings = strings.stream().filter(ObjectUtil::isNotEmpty).collect(Collectors.toList());
+            strings = strings.stream().filter(ObjectUtil::isNotEmpty).filter(x->!x.startsWith("#")).collect(Collectors.toList());
             List<Parser.Line> lines = new ArrayList<>();
             for (int i = 0; i < strings.size(); i++) {
                 lines.add(new Parser.Line(strings.get(i), i));
